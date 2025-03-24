@@ -5,17 +5,7 @@ Bu proje, Python'da graf veri yapısı kullanılarak metro istasyonları arasın
 ✔ **En az aktarmalı rotayı** (BFS algoritması)  
 ✔ **En hızlı rotayı** (A* algoritması) bulan bir simülasyondur.  
 
----
 
-## 📋 Proje Gereklilikleri Karşılama Durumu  
-| Gereklilik | Durum |  
-|------------|-------|  
-| Graf veri yapısı ile metro ağı modelleme | ✅ Tamamlandı |  
-| BFS ile en az aktarmalı rota | ✅ Tamamlandı |  
-| A* ile en hızlı rota | ✅ Tamamlandı |  
-| Dokümantasyon (README.md) | ⚠️ Bu dosya |  
-
----
 
 ## 🛠️ Teknik Detaylar  
 ### Kullanılan Algoritmalar  
