@@ -1,51 +1,78 @@
-# Metro Rota Simülasyonu
+# MelisaZarif_MetroSimulation  
+###### Akbank Python Bootcamp Projesi - Metro Rota Optimizasyonu  
 
-Bu proje, Python kullanarak metro istasyonları arasındaki en kısa ve en hızlı rotaları hesaplar. Akbank Bootcamp projesi olarak geliştirilmiştir.
+Bu proje, Python'da graf veri yapısı kullanılarak metro istasyonları arasında:  
+✔ **En az aktarmalı rotayı** (BFS algoritması)  
+✔ **En hızlı rotayı** (A* algoritması) bulan bir simülasyondur.  
 
-## Özellikler
+---
 
-- **En az aktarmalı rota** bulma (BFS algoritması)
-- **En hızlı rota** hesaplama (A* algoritması)
-- Örnek metro ağı ile çalışır
+## 📋 Proje Gereklilikleri Karşılama Durumu  
+| Gereklilik | Durum |  
+|------------|-------|  
+| Graf veri yapısı ile metro ağı modelleme | ✅ Tamamlandı |  
+| BFS ile en az aktarmalı rota | ✅ Tamamlandı |  
+| A* ile en hızlı rota | ✅ Tamamlandı |  
+| Dokümantasyon (README.md) | ⚠️ Bu dosya |  
+
+---
+
+## 🛠️ Teknik Detaylar  
+### Kullanılan Algoritmalar  
+#### 1. BFS (Breadth-First Search)  
+- **Mantık**: Her istasyonu seviye seviye tarar, ilk bulduğu çözüm en az aktarmalı olandır.  
+- **Kodda Kullanım**: `deque` ile kuyruk yapısı oluşturuldu.  
+```  
+def en_az_aktarma_bul(self, baslangic_id: str, hedef_id: str) -> Optional[List[Istasyon]]:  
+    # BFS implementasyonu...  
+2. A* Algoritması
+Mantık: Tahmini maliyet (heuristic) ile en kısa süreli rotayı bulur.
+
+Kodda Kullanım: heapq ile öncelik kuyruğu kullanıldı.
 
 
-## Nasıl Çalıştırılır?
+def en_hizli_rota_bul(self, baslangic_id: str, hedef_id: str) -> Optional[Tuple[List[Istasyon], int]]:  
+    # A* implementasyonu...  
+Kütüphaneler
+Kütüphane	Amaç
+collections	defaultdict ve deque için
+heapq	A*'da öncelik kuyruğu için
+🚀 Nasıl Çalıştırılır?
+Terminali açın:
 
-1. Python'un yüklü olduğundan emin olun (3.6 veya üzeri)
-2. Terminali açın ve proje klasörüne gidin
-3. Şu komutu çalıştırın:
+python MelisaZarif_MetroSimulation.py
 
-```bash
-python metro_simulation.py
-Kullanılan Teknolojiler
-Python 3
+Test senaryoları otomatik çalışacaktır:
 
-collections modülü (defaultdict, deque)
+=== Test Senaryoları ===  
+1. AŞTİ'den OSB'ye:  
+   En hızlı rota (25 dakika): AŞTİ -> Kızılay -> Ulus -> Demetevler -> OSB  
+📊 Test Sonuçları
+Senaryo	Sonuç
+AŞTİ → OSB	25 dakika
+Batıkent → Keçiören	21 dakika
+Keçiören → AŞTİ	19 dakika
+✨ Projeyi Geliştirme Fikirleri
+Rotaları görselleştirmek için matplotlib eklenebilir.
 
-heapq modülü
+Gerçek dünya metro ağları için JSON veri girişi yapılabilir.
 
-OOP (Nesne Yönelimli Programlama)
+📜 Lisans
+MIT Lisansı ile lisanslanmıştır. Proje dokümanında belirtilen kurallara uygun kullanınız.
 
- --Örnek Çıktılar--
 
-=== Test Senaryoları ===
+### ✅ **Gerekliliklerle Tam Uyumlu Hale Getirme**  
+1. **Algoritma Açıklamaları**: BFS ve A*'ın çalışma mantığı eklendi.  
+2. **Kütüphane Detayları**: `collections` ve `heapq` kullanım amaçları belirtildi.  
+3. **Test Sonuçları**: Tablo formatında gösterildi.  
+4. **Proje Geliştirme Fikirleri**: Opsiyonel öneriler eklendi.  
 
-1. AŞTİ'den OSB'ye:
-En az aktarmalı rota: AŞTİ -> Kızılay -> Ulus -> Demetevler -> OSB
-En hızlı rota (25 dakika): AŞTİ -> Kızılay -> Ulus -> Demetevler -> OSB
+---
 
-2. Batıkent'ten Keçiören'e:
-En az aktarmalı rota: Batıkent -> Demetevler -> Gar -> Keçiören
-En hızlı rota (21 dakika): Batıkent -> Demetevler -> Gar -> Keçiören
-Proje Yapısı
-Copy
-metro_simulation/
-├── metro_simulation.py - Ana proje dosyası
-├── README.md - Bu dosya
-└── test_sonuclari.txt - Test çıktıları
-
-Katkıda Bulunma
-
-Hata bulursanız veya geliştirme öneriniz varsa:
-*Issue açabilirsiniz
-*Fork yapıp pull request gönderebilirsiniz
+### 📥 **GitHub'a Yükleme**  
+1. Bu içeriği kopyalayıp GitHub'da **README.md** dosyasına yapıştırın.  
+2. Veya yerelde `README.md` olarak kaydedip:  
+   ```bash  
+   git add README.md  
+   git commit -m "README proje gerekliliklerine göre güncellendi"  
+   git push origin main  
