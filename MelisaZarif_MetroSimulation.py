@@ -31,60 +31,75 @@ class MetroAgi:
         istasyon1.komsu_ekle(istasyon2, sure)
         istasyon2.komsu_ekle(istasyon1, sure)
 
-
     def en_az_aktarma_bul(self, baslangic_id: str, hedef_id: str) -> Optional[List[Istasyon]]:
+        """
+        AMAÇ: En az aktarmalı rotayı bulmak (BFS seviye seviye arama yapar).
 
+        NASIL ÇALIŞIR?
+        1. Başlangıç istasyonundan başlar, tüm komşularını tek tek tarar.
+        2. Kuyruk (deque) kullanır çünkü FIFO mantığıyla ilk bulduğu çözüm en kısadır.
+        3. Ziyaret edilenleri set() ile takip ederek döngüyü önler.
+
+        """
         if baslangic_id not in self.istasyonlar or hedef_id not in self.istasyonlar:
-            return None
+            return None  # Geçersiz istasyon kontrolü
 
         baslangic = self.istasyonlar[baslangic_id]
         hedef = self.istasyonlar[hedef_id]
 
+        # Kuyruk: (mevcut_istasyon, rota)
         kuyruk = deque([(baslangic, [baslangic])])
-        ziyaret_edildi = set([baslangic])
+        ziyaret_edildi = set([baslangic])  # Tekrar ziyareti engelle
 
         while kuyruk:
-            current, rota = kuyruk.popleft()
+            current, rota = kuyruk.popleft()  # Kuyruğun BAŞINDAN al (FIFO)
 
             if current == hedef:
-                return rota
+                return rota  # Hedefe ulaşıldı!
 
-            for komsu, _ in current.komsular:
+            for komsu, _ in current.komsular:  # Tüm komşuları gez
                 if komsu not in ziyaret_edildi:
                     ziyaret_edildi.add(komsu)
-                    kuyruk.append((komsu, rota + [komsu]))
+                    kuyruk.append((komsu, rota + [komsu]))  # Yeni rotayı kuyruğa ekle
 
-        return None
-
+        return None  # Rota yoksa
 
     def en_hizli_rota_bul(self, baslangic_id: str, hedef_id: str) -> Optional[Tuple[List[Istasyon], int]]:
+        """
+        AMAÇ: En kısa süreli rotayı bulmak (A* tahmini maliyet kullanır).
 
+        NASIL ÇALIŞIR?
+        1. Öncelik kuyruğu (min-heap) kullanır. En düşük maliyetli rotayı önce çeker.
+        2. Her adımda toplam süreyi hesaplar: g(n) = mevcut süre, h(n) = 0 (basit versiyon).
+        3. Ziyaret edilenleri set() ile takip eder.
+        """
         if baslangic_id not in self.istasyonlar or hedef_id not in self.istasyonlar:
-            return None
+            return None  # Geçersiz istasyon kontrolü
 
         baslangic = self.istasyonlar[baslangic_id]
         hedef = self.istasyonlar[hedef_id]
 
-        # Öncelik kuyruğu: (toplam_sure, id(current), current, rota)
+        # Min-Heap: (toplam_sure, id(current), current, rota)
         pq = [(0, id(baslangic), baslangic, [baslangic])]
         ziyaret_edildi = set()
 
         while pq:
-            toplam_sure, _, current, rota = heapq.heappop(pq)
+            toplam_sure, _, current, rota = heapq.heappop(pq)  # En düşük süreli rotayı al
 
             if current == hedef:
-                return (rota, toplam_sure)
+                return (rota, toplam_sure)  # Hedefe ulaşıldı!
 
             if current in ziyaret_edildi:
-                continue
+                continue  # Zaten ziyaret edildiyse atla
 
             ziyaret_edildi.add(current)
 
             for komsu, sure in current.komsular:
                 if komsu not in ziyaret_edildi:
-                    heapq.heappush(pq, (toplam_sure + sure, id(komsu), komsu, rota + [komsu]))
+                    yeni_toplam = toplam_sure + sure
+                    heapq.heappush(pq, (yeni_toplam, id(komsu), komsu, rota + [komsu]))  # Kuyruğa ekle
 
-        return None
+        return None  # Rota yoksa
 
 
 # Örnek Kullanım
