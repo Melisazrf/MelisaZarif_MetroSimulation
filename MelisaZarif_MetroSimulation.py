@@ -181,3 +181,39 @@ if __name__ == "__main__":
     if sonuc:
         rota, sure = sonuc
         print(f"En hızlı rota ({sure} dakika):", " -> ".join(i.ad for i in rota))
+
+    print("\n=== Gelişmiş Test Senaryoları ===")
+
+    # Senaryo 4: Aynı hat üzerinde komşu istasyonlar
+    print("\n4. Kızılay -> Ulus (Kırmızı Hat üzerinde direkt bağlantı):")
+    sonuc = metro.en_hizli_rota_bul("K1", "K2")
+    if sonuc:
+        rota, sure = sonuc
+        print(f"Direkt rota ({sure} dakika):", " -> ".join(i.ad for i in rota))
+
+    # Senaryo 5: Uzak istasyonlar
+    print("\n6. OSB -> Keçiören (Şehir karşı uçları):")
+    sonuc = metro.en_hizli_rota_bul("K4", "T4")
+    if sonuc:
+        rota, sure = sonuc
+        print(f"En hızlı ({sure} dakika):", " -> ".join(i.ad for i in rota))
+
+    # Senaryo 6: Aynı istasyon (Edge case)
+    print("\n7. Kızılay -> Kızılay (Aynı istasyon):")
+    sonuc = metro.en_hizli_rota_bul("K1", "K1")
+    if sonuc:
+        rota, sure = sonuc
+        print(f"Sonuç: {sure} dakika", " -> ".join(i.ad for i in rota) if rota else "Başlangıç noktası")
+    else:
+        print("Hata: Aynı istasyon seçildi")
+
+   # Senaryo 7: Sıhhiye'den Keçiören'e
+    print("\n7. Sıhhiye'den Keçiören'e:")
+    rota = metro.en_az_aktarma_bul("M3", "T4")
+    if rota:
+        print("En az aktarmalı rota:", " -> ".join(i.ad for i in rota))
+
+    sonuc = metro.en_hizli_rota_bul("M3", "T4")
+    if sonuc:
+        rota, sure = sonuc
+        print(f"En hızlı rota ({sure} dakika):", " -> ".join(i.ad for i in rota))
